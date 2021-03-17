@@ -1,4 +1,10 @@
 <?php 
+/*
+    Febrick Hariyanto
+    203040055
+    github.com/febrick/pw2021_203040055
+    jumat 10-11
+*/
 $pemainBola = [
     [
         "nama"=>"Cristiano Ronaldo",
