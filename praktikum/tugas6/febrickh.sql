@@ -47,6 +47,26 @@ INSERT INTO `elektronik` (`id`, `img`, `nama`, `informasi produk`, `jenis`, `har
 (6, 'asus4.jpg', 'ASUS X441BA', 'LAPTOP ASUS X441BA AMD A4-9125 4GB 1TB DVD VGA R3 WIN10.', 'elektronik', 5999000),
 (7, 'asus5.jpg', 'ASUS ROG Zephyrus', 'ASUS ROG Zephyrus GA401II-R75TA8W R7-4800HS/GTX1650Ti/8G/512G PCIe/120Hz.', 'elektronik', 19260000);
 
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(220) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`) VALUES
+(9, 'admin', '$2y$10$AsDb1WhwJh/zjgvJFn1bH.vQQdItUUixlWgGLMmwi.2veRLobh4Pe');
+
+
 --
 -- Indexes for dumped tables
 --
@@ -58,14 +78,27 @@ ALTER TABLE `elektronik`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT untuk tabel `elektronik`
+-- AUTO_INCREMENT untuk tabel `buku`
 --
+
 ALTER TABLE `elektronik`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT untuk tabel `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

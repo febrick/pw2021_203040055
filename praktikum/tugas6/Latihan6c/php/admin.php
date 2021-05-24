@@ -8,23 +8,23 @@ Shift Jum'at 10.00 - 11.00
 <?php
 session_start();
 
-if(!isset($_SESSION["username"])){
+if (!isset($_SESSION["username"])) {
     header("Location: login.php");
     exit;
 }
 
 require 'function.php';
-if(isset($_GET['cari'])){
-    $keyword=$_GET['keyword'];;
+if (isset($_GET['cari'])) {
+    $keyword = $_GET['keyword'];;
     $elektronik = query(
-        "SELECT * FROM sepatu WHERE
+        "SELECT * FROM elektronik WHERE
         nama LIKE '%$keyword%' OR
         informasi LIKE '%$keyword%' OR
         jenis LIKE '%$keyword%' OR
         harga LIKE '%$keyword%' 
         "
     );
-}else{
+} else {
     $elektronik = query("SELECT * FROM elektronik");
 }
 ?>
@@ -37,9 +37,9 @@ if(isset($_GET['cari'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css">
-    
+
     <style>
-        img{
+        img {
             max-width: 200px;
         }
     </style>
@@ -56,8 +56,8 @@ if(isset($_GET['cari'])){
             <a href="tambah.php"><button class="button primary outline">Tambah Data</button></a>
         </div>
         <form action="" method="get">
-        <input type="text" name="keyword" data-role="input" autofocus width="500px">
-        <button type="submit" name="cari" class="button secondary outline">Cari</button>
+            <input type="text" name="keyword" data-role="input" autofocus width="500px">
+            <button type="submit" name="cari" class="button secondary outline">Cari</button>
         </form>
     </div>
     <table class="table row-border">
@@ -72,37 +72,38 @@ if(isset($_GET['cari'])){
             </tr>
         </thead>
         <tbody>
-        <?php if(empty($elektronik)): ?>
-        <tr>
-            <th colspan="7">Data tidak di temukan</th>
-        </tr>
-        <?php else: ?>
-            <?php $i=1;
-            foreach ($elektronik as $lk):
+            <?php if (empty($elektronik)) : ?>
+                <tr>
+                    <th colspan="7">Data tidak di temukan</th>
+                </tr>
+            <?php else : ?>
+                <?php $i = 1;
+                foreach ($elektronik as $lk) :
                 ?>
-            <tr>
-                <th scope="row"><?=$i?></th>
-                <td><img width="300px" src="../assets/<?= $lk["img"] ?>" alt="foto"></td>
-                <td><?= $lk["nama"]?> </td>
-                <td><?= $lk["informasi produk"]?> </td>
-                <td><?= $lk["jenis"]?> </td>
-                <td><?= $lk["harga"]?> </td>
-                <td>
-                    <a href="ubah.php?id=<?= $lk["id"]?>"><button class="button info outline">Ubah</button></a>
-                        
-                    <a href="hapus.php?id=<? $lk["id"]?> <onclick="return confirm(Hapus Data??)><button class="button warning outline">Hapus</button>
-                </td>
-            </tr>
-            <?php
-            $i++;
-            endforeach;
-            ?>
-        <?php endif; ?>
+                    <tr>
+                        <th scope="row"><?= $i ?></th>
+                        <td><img width="300px" src="../assets/<?= $lk["img"] ?>" alt="foto"></td>
+                        <td><?= $lk["nama"] ?> </td>
+                        <td><?= $lk["informasi produk"] ?> </td>
+                        <td><?= $lk["jenis"] ?> </td>
+                        <td><?= $lk["harga"] ?> </td>
+                        <td>
+                            <a href="ubah.php?id=<?= $lk["id"] ?>"><button class="button info outline">Ubah</button></a>
+
+                            <a href="hapus.php?id=<? $lk["id"] ?> <onclick=" return confirm(Hapus Data??)><button class="button warning outline">Hapus</button>
+                        </td>
+                    </tr>
+                <?php
+                    $i++;
+                endforeach;
+                ?>
+            <?php endif; ?>
         </tbody>
     </table>
 
     <script src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-    </body>
+</body>
+
 </html>

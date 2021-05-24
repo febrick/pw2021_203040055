@@ -7,10 +7,10 @@ Shift Jum'at 10.00 - 11.00
 ?>
 <?php
 session_start();
-require'function.php';
+require 'function.php';
 
 // cek cookie
-if(isset($_COOKIE['username']) && isset($_COOKIE['hash'])){
+if (isset($_COOKIE['username']) && isset($_COOKIE['hash'])) {
     $username = $_COOKIE['username'];
     $hash = $_COOKIE['hash'];
 
@@ -18,7 +18,7 @@ if(isset($_COOKIE['username']) && isset($_COOKIE['hash'])){
     $result = mysqli_query(koneksi(), "SELECT * FROM user WHERE username = '$username'");
     $row = mysqli_fetch_assoc($result);
 
-    if($hash === hash('sha256', $row['id'], false)){
+    if ($hash === hash('sha256', $row['id'], false)) {
         $_SESSION['username'] = $row['username'];
         header("Location: admin.php");
         exit;
@@ -26,42 +26,42 @@ if(isset($_COOKIE['username']) && isset($_COOKIE['hash'])){
 }
 
 // pengecekan apakah user sudah login
-if(isset($SESSION['username'])){
-	header("Location: admin.php");
-	exit;
+if (isset($SESSION['username'])) {
+    header("Location: admin.php");
+    exit;
 }
 
 // Login
-if(isset($_POST['submit'])){
-	$username = $_POST['username'];
-	$password = $_POST['password'];
-	$cek_user = mysql_query(koneksi(), "SELECT * FROM user WHERE username = '$username' ");
+if (isset($_POST['submit'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $cek_user = mysqli_query(koneksi(), "SELECT * FROM user WHERE username = '$username' ");
 
-	// mencocokan USERNAME dan PASSWORD
-	if(mysqli_num_rows($cek_user)>0){
+    // mencocokan USERNAME dan PASSWORD
+    if (mysqli_num_rows($cek_user) > 0) {
         $row = mysqli_fetch_assoc($cek_user);
-        if(password_verify($password, $row['password'])){
+        if (password_verify($password, $row['password'])) {
             $_SESSION['username'] = $_POST['username'];
-            $_SESSION['hash'] = hash('sha256',$row['id'], false);
+            $_SESSION['hash'] = hash('sha256', $row['id'], false);
 
             // jika remember me dicentang
-            if(isset($_POST['remember'])){
-                setcookie('username', $row['username'], time() + 60*60*24);
-                $hash =hash('sha256', $row['id'],false);
+            if (isset($_POST['remember'])) {
+                setcookie('username', $row['username'], time() + 60 * 60 * 24);
+                $hash = hash('sha256', $row['id'], false);
             }
-
         }
-        if(hash('sha256', $row['id']) == $_SESSION['hash']){
+        if (hash('sha256', $row['id']) == $_SESSION['hash']) {
             header("Location: admin.php");
             die;
         }
-		header("Location: ../index.php");
-	}
+        header("Location: ../index.php");
+    }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,30 +72,31 @@ if(isset($_POST['submit'])){
 
 
 </head>
+
 <body>
     <div class="container">
-    	<div class="gird">
-    		<form action="" method="post">
-    		<?php if(isset($error)): ?>
-    		<p style="color: red; font-style: italic;">Username atau Password salah</p>
-    	    <?php endif; ?>
-        		<label for="username">Username</label>
-        		<input type="text" name="username">
+        <div class="gird">
+            <form action="" method="post">
+                <?php if (isset($error)) : ?>
+                    <p style="color: red; font-style: italic;">Username atau Password salah</p>
+                <?php endif; ?>
+                <label for="username">Username</label>
+                <input type="text" name="username">
 
-        		<label for="password">Password</label>
-        		<input type="password" name="password">
+                <label for="password">Password</label>
+                <input type="password" name="password">
 
-        		<div class="remember">
-        			<input type="checkbox" name="remember">
-        			<label for="remember">Remember me</label>
-        		</div>
-                
-        		<button type="submit" name="submit" class="button primary outline">Login</button>
-    		</form>
+                <div class="remember">
+                    <input type="checkbox" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+
+                <button type="submit" name="submit" class="button primary outline">Login</button>
+            </form>
             <div class="registrasi">
                 <p>Belum punya akun ? Registrasi <a href="registrasi.php">Disini</a></p>
             </div>
-    	</div>
+        </div>
     </div>
 
     <script src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
